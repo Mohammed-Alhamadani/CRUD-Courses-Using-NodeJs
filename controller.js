@@ -1,23 +1,31 @@
 const { validationResult } = require('express-validator');
 
 // Importing Courses
-let { courses } = require('./data');
-
-const getAllCourses = (req, res) => {
+const Course = require('./course.model');
+// get all courses from database using course model
+const getAllCourses = async (req, res) => {
+    const courses = await Course.find();
+    console.log(courses);
     res.json(courses);
 };
 
-const getCourseById = (req, res) => {
-    // console.log(req.params.id);
-    let id = req.params.id;
-    const course = courses.find((course) => course.id == id);
-    if (!course) {
-        res.status(404).json({ msg: 'Course Not Found' });
+const getCourseById = async (req, res) => {
+    try {
+        // console.log(req.params.id);
+        let id = req.params.id;
+        // const courses = Course.find((course) => course.id == id);
+        const courses = await Course.findById(id);
+        if (!courses) {
+            return res.status(404).json({ msg: 'Course Not Found' });
+        } else {
+            res.json(courses);
+        }
+    } catch (error) {
+        return res.status(400).json({ msg: 'Invalid Object Id' });
     }
-    res.json(course);
 };
 
-const addNewCourse = (req, res) => {
+const addNewCourse = async (req, res) => {
     // console.log(req.body.title);
     // console.log(req.body.price);
     const errors = validationResult(req);
@@ -25,12 +33,14 @@ const addNewCourse = (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json(errors.array());
     }
-    courses.push({
-        id: courses.length + 1,
-        ...req.body,
-    });
-    const course = { id: courses.length + 1, ...req.body };
-    res.status(201).json(course);
+    // courses.push({
+    //     id: courses.length + 1,
+    //     ...req.body,
+    // });
+    // const course = { id: courses.length + 1, ...req.body };
+    const newCourse = new Course(req.body);
+    await newCourse.save();
+    res.status(201).json(newCourse);
 };
 
 const updateCourse = (req, res) => {
