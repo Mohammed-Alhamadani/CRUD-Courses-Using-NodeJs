@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 const port = 3002;
 // const { MongoClient } = require('mongodb');
-
-const url =
-    'mongodb+srv://mohammed:Mohammed01@cluster88451.8naio.mongodb.net/CoursesDb?retryWrites=true&w=majority&appName=Cluster88451';
+const dotenv = require('dotenv').config();
+const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}`;
+// const url =
+('mongodb+srv://mohammed:Mohammed01@cluster88451.8naio.mongodb.net/CoursesDb?retryWrites=true&w=majority&appName=Cluster88451');
 
 // let UrlNew =
 //     'mongodb+srv://mohammed:Mohammed01@cluster88451.8naio.mongodb.net/';
-
 
 // const client = new MongoClient(url);
 
