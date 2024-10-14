@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 3002;
+const cors = require('cors');
 // const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv').config();
 const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}`;
-
 
 // const client = new MongoClient(url);
 
@@ -42,6 +42,7 @@ const Controller = require('./controller');
 const validationSchema = require('./validationSchema');
 
 app.use(express.json());
+app.use(cors());
 const courseRouter = require('./routes');
 
 app.use('/api/courses', courseRouter);
