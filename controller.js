@@ -63,14 +63,16 @@ const updateCourse = async (req, res) => {
     }
 };
 
-const deleteCourse = (req, res) => {
+const deleteCourse = async (req, res) => {
     let id = req.params.id;
-    courses = courses.filter((course) => {
-        course.id != id;
-        // if (!id) {
-        //     return res.status(404).json({ msg: 'Course Not Found' });
-        // }
-    });
+
+    await Course.deleteOne({ _id: id }).then(() => {});
+    // courses = courses.filter((course) => {
+    //     course.id != id;
+    //     // if (!id) {
+    //     //     return res.status(404).json({ msg: 'Course Not Found' });
+    //     // }
+    // });
     res.status(200).json({ success: 'Course Been Deleted' });
 };
 module.exports = {
