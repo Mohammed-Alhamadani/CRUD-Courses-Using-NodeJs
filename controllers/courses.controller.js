@@ -1,13 +1,13 @@
 const { validationResult } = require('express-validator');
 
-const httpStatus = require('./httpStatus');
+const httpStatus = require('../httpStatus');
 
 // Importing Courses
-const Course = require('./course.model');
+const Course = require('../models/course.model');
 // get all courses from database using course model
 const getAllCourses = async (req, res) => {
     const courses = await Course.find({}, { __v: false });
-    console.log(courses);
+    // console.log(courses);
     res.json({ status: httpStatus.SUCCESS, data: { courses } });
 };
 

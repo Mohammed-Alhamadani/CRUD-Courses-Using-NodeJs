@@ -26,13 +26,13 @@ fetch('http://localhost:3002/api/courses')
         `;
         });
         // Add event listeners for Delete buttons
-        const deleteBtns = document.querySelectorAll('.delete-btn');
-        deleteBtns.forEach((btn) => {
+        const deleteBtn = document.querySelectorAll('.delete-btn');
+        deleteBtn.forEach((btn) => {
             btn.addEventListener('click', deleteCourse);
         });
         // Add event listeners for Edit buttons
-        const editBtns = document.querySelectorAll('.edit-btn');
-        editBtns.forEach((btn) => {
+        const editBtn = document.querySelectorAll('.edit-btn');
+        editBtn.forEach((btn) => {
             btn.addEventListener('click', editCourse);
         });
     })
@@ -68,10 +68,17 @@ function deleteCourse(e) {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             location.reload();
         })
         .catch((error) => console.error(error));
+
+    deleteModal.addEventListener('show.bs.modal', (e) => {
+        const courseId = e.relatedTarget.getAttribute('data-id');
+        confirmDeleteBtn.addEventListener('click', () => {
+            deleteCourse(courseId);
+        });
+    });
 }
 
 // Edit course

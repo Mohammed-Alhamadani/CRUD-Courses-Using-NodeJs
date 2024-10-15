@@ -2,13 +2,14 @@ const express = require('express');
 const app = express();
 const port = 3002;
 const cors = require('cors');
+const httpStatus = require('./httpStatus');
 // const { MongoClient } = require('mongodb');
 const dotenv = require('dotenv').config();
 const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}`;
 
 // const client = new MongoClient(url);
 
-// // Old way to connect mongo db
+// //  connect mongo db
 // // Database Name
 // const dbName = 'CoursesDb';
 
@@ -30,22 +31,25 @@ const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.
 // }
 // main();
 
-// New way to connect mongo db using Mongoose
+// connect mongo db using Mongoose
 
 const mongoose = require('mongoose');
 
 mongoose.connect(url).then(() => console.log('Database Connected!'));
 
 const { validationResult } = require('express-validator');
-const Controller = require('./controller');
+const Controller = require('./controllers/courses.controller');
 
-const validationSchema = require('./validationSchema');
+// const validationSchema = require('./validationSchema');
 
 app.use(express.json());
 app.use(cors());
-const courseRouter = require('./routes');
+
+const courseRouter = require('./routes/course.routes');
+const usersRouter = require('./routes/user.routes');
 
 app.use('/api/courses', courseRouter);
+app.use('/api/users', usersRouter);
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
