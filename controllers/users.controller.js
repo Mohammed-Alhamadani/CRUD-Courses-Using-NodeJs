@@ -31,7 +31,23 @@ const register = async (req, res) => {
         data: { courses: newUser },
     });
 };
-const login = () => {};
+const login = async (req, res) => {
+    const { email, password } = req.body;
+    if (!email && !password) {
+        res.json({
+            status: httpStatus.ERROR,
+            data: { message: 'You are No Registered' },
+        });
+    }
+    const user = await User.findOne({ email: email });
+    const matchPassword = bcrypt.compare(password, user.password);
+
+    if(user && matchPassword){
+        res.json({ status: httpStatus.SUCCESS, data: {user:'Logged in succefull'} });
+    }else{
+        
+    }
+};
 
 module.exports = {
     getAllUsers,
