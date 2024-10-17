@@ -50,6 +50,6 @@ const usersRouter = require('./routes/user.routes');
 app.use('/api/courses', courseRouter);
 app.use('/api/users', usersRouter);
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
     console.log(`http://0.0.0.0:${process.env.PORT}`);
 });
