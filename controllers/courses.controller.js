@@ -13,7 +13,6 @@ const getAllCourses = async (req, res) => {
 
 const getCourseById = async (req, res) => {
     try {
-        // console.log(req.params.id);
         let id = req.params.id;
         // const courses = Course.find((course) => course.id == id);
         const courses = await Course.findById(id);
