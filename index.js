@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-const httpStatus = require('./httpStatus');
+const cors = require("cors");
+const httpStatus = require("./httpStatus");
 // const { MongoClient } = require('mongodb');
-const dotenv = require('dotenv').config();
+const dotenv = require("dotenv").config();
 const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.env.DBHOST}`;
-
+const path = require("path");
 // const client = new MongoClient(url);
 
 // //  connect mongo db
@@ -32,24 +32,31 @@ const url = `mongodb+srv://${process.env.DBUSER}:${process.env.DBPWD}@${process.
 
 // connect mongo db using Mongoose
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-mongoose.connect(url).then(() => console.log('Database Connected!'));
+mongoose.connect(url).then(() => console.log("Database Connected!"));
 
-const { validationResult } = require('express-validator');
-const Controller = require('./controllers/courses.controller');
+const { validationResult } = require("express-validator");
+const Controller = require("./controllers/courses.controller");
 
 // const validationSchema = require('./validationSchema');
 
 app.use(express.json());
 app.use(cors());
 
-const courseRouter = require('./routes/course.routes');
-const usersRouter = require('./routes/user.routes');
+const courseRouter = require("./routes/course.routes");
+const usersRouter = require("./routes/user.routes");
 
-app.use('/api/courses', courseRouter);
-app.use('/api/users', usersRouter);
+// Load HTML Page
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "/index.html"));
+});
+
+// For serving static files (js/css/images all should be inside public folder)
+app.use(express.static("public"));
+app.use("/api/courses", courseRouter);
+app.use("/api/users", usersRouter);
 
 app.listen(process.env.PORT, () => {
-    console.log(`http://0.0.0.0:${process.env.PORT}`);
+  console.log(`http://0.0.0.0:${process.env.PORT}`);
 });
