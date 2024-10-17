@@ -42,10 +42,12 @@ const login = async (req, res) => {
     const user = await User.findOne({ email: email });
     const matchPassword = bcrypt.compare(password, user.password);
 
-    if(user && matchPassword){
-        res.json({ status: httpStatus.SUCCESS, data: {user:'Logged in succefull'} });
-    }else{
-        
+    if (user && matchPassword) {
+        res.json({
+            status: httpStatus.SUCCESS,
+            data: { user: 'Logged in successful' },
+        });
+    } else {
     }
 };
 

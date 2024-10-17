@@ -4,7 +4,7 @@ let addCourseForm = document.getElementById('add-course-form');
 let saveCourseBtn = document.getElementById('save-course-btn');
 
 // Fetch and display courses
-fetch('http://localhost:3002/api/courses')
+fetch('http://api/courses')
     .then((res) => res.json())
     .then((data) => {
         let newCourses = data.data.courses;
@@ -45,7 +45,7 @@ saveCourseBtn.addEventListener('click', (e) => {
     const title = formData.get('title');
     const price = formData.get('price');
 
-    fetch('http://localhost:3002/api/courses', {
+    fetch('http://api/courses', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ saveCourseBtn.addEventListener('click', (e) => {
 // Delete course
 function deleteCourse(e) {
     const courseId = e.target.getAttribute('data-id');
-    fetch(`http://localhost:3002/api/courses/${courseId}`, {
+    fetch(`http://api/courses/${courseId}`, {
         method: 'DELETE',
     })
         .then((res) => res.json())
@@ -93,7 +93,7 @@ function editCourse(e) {
     titleInput.value = '';
     priceInput.value = '';
 
-    fetch(`http://localhost:3002/api/courses/${courseId}`)
+    fetch(`http://api/courses/${courseId}`)
         .then((res) => res.json())
         .then((data) => {
             if (data.data) {
@@ -115,7 +115,7 @@ document.getElementById('update-course-btn').addEventListener('click', (e) => {
         .getAttribute('data-id');
     const title = document.getElementById('edit-course-title').value;
     const price = document.getElementById('edit-course-price').value;
-    fetch(`http://localhost:3002/api/courses/${courseId}`, {
+    fetch(`http://api/courses/${courseId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

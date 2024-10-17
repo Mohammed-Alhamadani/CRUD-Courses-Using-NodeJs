@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = 3002;
 const cors = require('cors');
 const httpStatus = require('./httpStatus');
 // const { MongoClient } = require('mongodb');
@@ -52,5 +51,5 @@ app.use('/api/courses', courseRouter);
 app.use('/api/users', usersRouter);
 
 app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`http://0.0.0.0:${process.env.PORT}`);
 });
